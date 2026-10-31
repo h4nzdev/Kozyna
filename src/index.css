@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: auto; /* Managed by Lenis */
+    background-color: #F5F0E7;
+    color: #261B16;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #F5F0E7;
+    color: #261B16;
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #EAE1D4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #C9BBA8;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C59B63;
+  }
+}
+
+/* Editorial Typography utilities */
+.font-editorial-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #DFC49B 0%, #C59B63 50%, #A6533A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-ivory-gradient {
+  background: linear-gradient(180deg, #FFFFFF 0%, #EAE1D4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Editorial Panels */
+.editorial-panel {
+  background: rgba(245, 240, 231, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(201, 187, 168, 0.45);
+}
+
+.editorial-card-dark {
+  background: #261B16;
+  border: 1px solid rgba(234, 225, 212, 0.12);
+}
+
+/* High-performance film grain: ultra-light CSS pattern */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.022;
+  background-image: radial-gradient(rgba(38, 27, 22, 0.4) 1px, transparent 0);
+  background-size: 8px 8px;
+  will-change: auto;
+}
+
+/* Editorial Image Zoom & Clipping Transitions */
+.editorial-img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.editorial-img-wrap img {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+}
+
+.editorial-img-wrap:hover img {
+  transform: scale(1.04);
+}
+
+/* Subtle reveal keyframes if needed */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
