@@ -1,24 +1,53 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, Star, Users, Music, Trees, Sun, Heart, ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import {
+  Sparkles,
+  Users,
+  Music,
+  Trees,
+  Sun,
+  Heart,
+  MapPin,
+  Layers,
+} from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { restaurantData } from '../data/restaurant';
+import AccordionGallery from './AccordionGallery';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const SPATIAL_PANELS = [
+  {
+    image: restaurantData.interiorPhoto,
+    label: "The Main Pavilion · Steel Trusses & Cage Chandeliers",
+    alt: "Soaring gabled ceiling with exposed black steel trusses and rectangular Edison cage chandeliers",
+  },
+  {
+    image: restaurantData.exteriorPhoto,
+    label: "The Arrival · Stacked Brick Pillars & Palm Lawn",
+    alt: "Authentic stacked brick entrance pillars crowned with illuminated Kozyna timber signage",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85",
+    label: "Botanical Garden Al Fresco · Island Breezes",
+    alt: "Open-air garden veranda surrounded by tropical Guimaras palms and flora",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85",
+    label: "The Artisanal Concrete Bar & Lounge",
+    alt: "Polished concrete feature wall with floating honey oak shelves and glassware",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=85",
+    label: "Private Celebration Suite · Twilight Dinners",
+    alt: "Intimate curated room designed for milestone celebrations and family banquets",
+  },
+];
+
 export default function DiningExperienceSection({ onOpenReservation }) {
   const exp = restaurantData.diningExperience;
-  const [activeReviewIdx, setActiveReviewIdx] = useState(0);
   const sectionRef = useRef(null);
   const gridRef = useRef(null);
-
-  // Auto-advance reviews gently
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveReviewIdx((prev) => (prev + 1) % exp.verifiedReviews.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [exp.verifiedReviews.length]);
 
   // GSAP scroll trigger
   useEffect(() => {
@@ -53,11 +82,11 @@ export default function DiningExperienceSection({ onOpenReservation }) {
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 pb-8 border-b border-soft-beige/70 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-8 border-b border-soft-beige/70 gap-6">
           <div>
             <span className="inline-flex items-center space-x-2 text-[10px] uppercase tracking-ultra-wide text-muted-olive font-mono mb-2">
               <Sparkles className="w-3.5 h-3.5 text-gold" />
-              <span>Section 06 · Dining Atmosphere & Ambiance</span>
+              <span>Section 06 · Dining Atmosphere & Spatial Design</span>
             </span>
             <h2 className="font-serif text-4xl sm:text-6xl text-espresso font-normal tracking-tight">
               Good Food. Great Company.
@@ -69,12 +98,50 @@ export default function DiningExperienceSection({ onOpenReservation }) {
 
           <div className="text-xs font-mono text-dark-brown/70 flex items-center space-x-2">
             <MapPin className="w-4 h-4 text-gold flex-shrink-0" />
-            <span>San Miguel, Jordan, Guimaras</span>
+            <span>Brgy. Alaguisoc, Jordan, Guimaras (Beside GSU Mosqueda)</span>
           </div>
         </div>
 
         {/* ============================================================== */}
-        {/* BENTO GRID: INTERIOR & EXTERIOR PHOTOGRAPHY + ATMOSPHERE      */}
+        {/* REACT BITS: <AccordionGallery /> COMPONENT INTEGRATION         */}
+        {/* The 5 Architectural & Atmospheric Spaces of Kozyna Restaurant */}
+        {/* ============================================================== */}
+        <div className="mb-16">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-4 border-b border-soft-beige/70 gap-2">
+            <div>
+              <div className="inline-flex items-center space-x-2 text-[10px] uppercase tracking-widest-editorial font-mono text-muted-olive font-semibold mb-1">
+                <Layers className="w-3.5 h-3.5 text-gold" />
+                <span>Interactive Spatial Gallery</span>
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl text-espresso font-normal">
+                The Environments of Kozyna
+              </h3>
+            </div>
+            <p className="text-xs font-mono text-dark-brown/60">
+              Hover or tap any panel to expand and inspect our interior & exterior atmospheres
+            </p>
+          </div>
+
+          <AccordionGallery
+            items={SPATIAL_PANELS}
+            defaultIndex={0}
+            height={460}
+            expandRatio={0.48}
+            trigger="hover"
+            accentColor="#C59B63"
+            overlayColor="#261B16"
+            textColor="#F5F0E7"
+            grayscale={true}
+            parallax={0.5}
+            tilt={7}
+            radius={14}
+            duration={0.65}
+            ease="power3.out"
+          />
+        </div>
+
+        {/* ============================================================== */}
+        {/* BENTO GRID: ATMOSPHERE NOTES & DINING PERSPECTIVES             */}
         {/* ============================================================== */}
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch mb-12">
           {/* Tile 1: LARGE INTERIOR PHOTO CARD (Span 8) */}
@@ -152,7 +219,7 @@ export default function DiningExperienceSection({ onOpenReservation }) {
             <div className="pt-6 mt-6 border-t border-soft-beige/60">
               <button
                 onClick={onOpenReservation}
-                className="w-full py-3 bg-espresso text-ivory hover:bg-gold hover:text-espresso text-xs uppercase tracking-widest-editorial font-semibold transition-colors shadow-sm"
+                className="w-full py-3 bg-espresso text-ivory hover:bg-gold hover:text-espresso text-xs uppercase tracking-widest-editorial font-semibold transition-colors shadow-sm cursor-pointer"
               >
                 Reserve Your Ambiance
               </button>
@@ -226,90 +293,10 @@ export default function DiningExperienceSection({ onOpenReservation }) {
               </span>
               <button
                 onClick={onOpenReservation}
-                className="text-espresso hover:text-gold font-semibold transition-colors"
+                className="text-espresso hover:text-gold font-semibold transition-colors cursor-pointer"
               >
                 Book Group →
               </button>
-            </div>
-          </div>
-        </div>
-
-        {/* ============================================================== */}
-        {/* VERIFIED GUEST TESTIMONIALS SPREAD                              */}
-        {/* ============================================================== */}
-        <div className="bg-white border border-soft-beige p-8 sm:p-12 shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 pb-4 border-b border-soft-beige/50 gap-4">
-            <div>
-              <span className="text-[10px] uppercase tracking-ultra-wide text-muted-olive font-mono block mb-1">
-                Verified Customer Testimonials
-              </span>
-              <h3 className="font-serif text-2xl sm:text-3xl text-espresso font-normal">
-                Memories Around Our Table
-              </h3>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="flex space-x-1 text-gold">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-gold text-gold" />
-                ))}
-              </div>
-              <span className="text-xs font-mono text-dark-brown/60 ml-2">5.0 / 5.0 Rating</span>
-            </div>
-          </div>
-
-          {/* Active Review Quote */}
-          <div className="min-h-[120px] flex flex-col justify-between">
-            <blockquote className="font-serif italic text-xl sm:text-2xl text-espresso leading-relaxed mb-6">
-              “{exp.verifiedReviews[activeReviewIdx].quote}”
-            </blockquote>
-
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 border-t border-soft-beige/40 gap-3">
-              <div>
-                <span className="text-sm font-semibold text-espresso">
-                  {exp.verifiedReviews[activeReviewIdx].author}
-                </span>
-                <span className="text-xs text-dark-brown/60 ml-2 font-mono">
-                  · {exp.verifiedReviews[activeReviewIdx].location}
-                </span>
-              </div>
-
-              {/* Prev / Next & Dots */}
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={() =>
-                    setActiveReviewIdx(
-                      (prev) => (prev - 1 + exp.verifiedReviews.length) % exp.verifiedReviews.length
-                    )
-                  }
-                  className="p-1 text-dark-brown/60 hover:text-espresso transition-colors"
-                  aria-label="Previous Review"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-
-                <div className="flex space-x-2">
-                  {exp.verifiedReviews.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveReviewIdx(i)}
-                      className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                        i === activeReviewIdx ? 'bg-gold' : 'bg-soft-beige hover:bg-dark-brown/40'
-                      }`}
-                      aria-label={`Show review ${i + 1}`}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={() =>
-                    setActiveReviewIdx((prev) => (prev + 1) % exp.verifiedReviews.length)
-                  }
-                  className="p-1 text-dark-brown/60 hover:text-espresso transition-colors"
-                  aria-label="Next Review"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
             </div>
           </div>
         </div>

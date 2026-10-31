@@ -140,11 +140,35 @@ export default function VisitSection({ onOpenReservation }) {
 
             {/* Direct Contacts & Social Links */}
             <div className="bg-dark-brown/70 border border-cream/15 p-6 space-y-4 shadow-xl">
-              <div className="text-xs space-y-2.5 font-mono">
-                <div className="flex items-center space-x-3 text-soft-beige/90">
-                  <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-                  <span>{restaurantData.contact.phone} · {restaurantData.contact.landline}</span>
+              <div className="text-xs space-y-3 font-mono">
+                <div className="flex items-start space-x-3 text-soft-beige/90">
+                  <Phone className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
+                  <div className="space-y-1">
+                    <div className="text-[10px] uppercase text-gold/80 font-semibold">Call or Text for Inquiries:</div>
+                    <div className="flex flex-wrap gap-x-3">
+                      <a href="tel:+639534256428" className="hover:text-gold transition-colors underline font-medium">
+                        +63 953 425 6428
+                      </a>
+                      <span>·</span>
+                      <a href="tel:+639695836203" className="hover:text-gold transition-colors underline font-medium">
+                        +63 969 583 6203
+                      </a>
+                    </div>
+                  </div>
                 </div>
+
+                <div className="flex items-center space-x-3 text-soft-beige/90">
+                  <Facebook className="w-4 h-4 text-gold flex-shrink-0" />
+                  <a
+                    href="https://www.facebook.com/Kozynarestaurant/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-gold transition-colors underline truncate"
+                  >
+                    facebook.com/Kozynarestaurant
+                  </a>
+                </div>
+
                 <div className="flex items-center space-x-3 text-soft-beige/90">
                   <Mail className="w-4 h-4 text-gold flex-shrink-0" />
                   <span>{restaurantData.contact.email}</span>
@@ -153,7 +177,7 @@ export default function VisitSection({ onOpenReservation }) {
 
               {/* Social Media Links */}
               <div className="pt-3 border-t border-cream/10 flex flex-wrap gap-2 items-center">
-                <span className="text-[10px] uppercase font-mono text-soft-beige/60 mr-2">Follow Us:</span>
+                <span className="text-[10px] uppercase font-mono text-soft-beige/60 mr-2">Official Channels:</span>
                 {restaurantData.socialLinks.map((s, idx) => (
                   <a
                     key={idx}
@@ -165,6 +189,34 @@ export default function VisitSection({ onOpenReservation }) {
                     {s.name}
                   </a>
                 ))}
+              </div>
+            </div>
+
+            {/* Nearby Tourist Spots & Accommodations Concierge Card */}
+            <div className="bg-dark-brown/70 border border-gold/30 p-6 space-y-4 shadow-xl">
+              <div className="flex items-center space-x-2 text-gold text-xs uppercase tracking-wider font-mono">
+                <Compass className="w-4 h-4 text-gold" />
+                <span>Jordan Tourist Spots & Nearby Stays</span>
+              </div>
+              <p className="text-xs text-soft-beige/80 font-light leading-relaxed">
+                Planning a day tour or weekend getaway to Jordan, Guimaras? Kozyna is centrally located right on the travel route.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-[11px] font-mono border-t border-cream/10">
+                <div className="space-y-1">
+                  <strong className="text-ivory block uppercase tracking-wider text-[10px] text-gold">Nearby Attractions:</strong>
+                  <div className="text-soft-beige/70">· GSU Mosqueda Campus (Beside us)</div>
+                  <div className="text-soft-beige/70">· Guimaras Provincial Capitol (5 mins)</div>
+                  <div className="text-soft-beige/70">· Balaan Bukid Pilgrimage Trail</div>
+                  <div className="text-soft-beige/70">· Trappist Monastery (15 mins)</div>
+                </div>
+                <div className="space-y-1">
+                  <strong className="text-ivory block uppercase tracking-wider text-[10px] text-gold">Nearby Accommodations:</strong>
+                  <div className="text-soft-beige/70">· Zemkamps Chalet (Jordan)</div>
+                  <div className="text-soft-beige/70">· Raymen Beach Resort (Alubihod)</div>
+                  <div className="text-soft-beige/70">· Jannah-Glycel Beach House</div>
+                  <div className="text-soft-beige/70">· Iloilo Hotels (15-min pump boat)</div>
+                </div>
               </div>
             </div>
           </div>

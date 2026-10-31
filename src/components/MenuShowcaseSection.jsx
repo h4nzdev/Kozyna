@@ -11,11 +11,19 @@ import {
   ArrowRight,
   BookOpen,
   Layers,
+  Globe,
+  Compass,
+  Gift,
+  Tag,
+  Users,
+  Percent,
+  CheckCircle,
 } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { menuCategories, menuItems } from '../data/menu';
 import { restaurantData } from '../data/restaurant';
+import InfiniteMenu from './InfiniteMenu';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,9 +33,20 @@ export default function MenuShowcaseSection({
   onViewMoreMenu,
 }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [activeTab, setActiveTab] = useState('ala-carte'); // 'ala-carte' or 'buffet'
+  const [activeTab, setActiveTab] = useState('ala-carte'); // 'ala-carte' | 'sphere' | 'buffet'
   const sectionRef = useRef(null);
   const gridRef = useRef(null);
+
+  // Prepare dishes for 3D Infinite Menu Sphere
+  const sphereMenuItems = useMemo(() => {
+    return menuItems.map((dish) => ({
+      image: dish.image,
+      title: dish.name,
+      description: `${dish.priceFormatted} · ${dish.categoryLabel}`,
+      link: '#',
+      dish: dish,
+    }));
+  }, []);
 
   const filteredItems = useMemo(() => {
     if (selectedCategory === 'all') {
@@ -104,7 +123,7 @@ export default function MenuShowcaseSection({
             <div className="inline-flex bg-cream p-1 border border-soft-beige">
               <button
                 onClick={() => setActiveTab('ala-carte')}
-                className={`px-4 sm:px-5 py-2 text-xs uppercase tracking-widest-editorial transition-all font-medium cursor-pointer ${
+                className={`px-3 sm:px-4 py-2 text-xs uppercase tracking-widest-editorial transition-all font-medium cursor-pointer ${
                   activeTab === 'ala-carte'
                     ? 'bg-espresso text-ivory font-semibold shadow-sm'
                     : 'text-espresso/70 hover:text-espresso'
@@ -113,36 +132,159 @@ export default function MenuShowcaseSection({
                 À La Carte
               </button>
               <button
+                onClick={() => setActiveTab('sphere')}
+                className={`px-3 sm:px-4 py-2 text-xs uppercase tracking-widest-editorial transition-all font-medium cursor-pointer flex items-center space-x-1.5 ${
+                  activeTab === 'sphere'
+                    ? 'bg-espresso text-ivory font-semibold shadow-sm'
+                    : 'text-espresso/70 hover:text-espresso'
+                }`}
+              >
+                <Globe className="w-3.5 h-3.5 text-gold" />
+                <span>360° Sphere</span>
+              </button>
+              <button
                 onClick={() => setActiveTab('buffet')}
-                className={`px-4 sm:px-5 py-2 text-xs uppercase tracking-widest-editorial transition-all font-medium cursor-pointer ${
+                className={`px-3 sm:px-4 py-2 text-xs uppercase tracking-widest-editorial transition-all font-medium cursor-pointer ${
                   activeTab === 'buffet'
                     ? 'bg-espresso text-ivory font-semibold shadow-sm'
                     : 'text-espresso/70 hover:text-espresso'
                 }`}
               >
-                Banquet Buffets
+                Buffets (₱329–₱349)
+              </button>
+              <button
+                onClick={() => setActiveTab('promos')}
+                className={`px-3 sm:px-4 py-2 text-xs uppercase tracking-widest-editorial transition-all font-medium cursor-pointer flex items-center space-x-1.5 ${
+                  activeTab === 'promos'
+                    ? 'bg-espresso text-ivory font-semibold shadow-sm'
+                    : 'text-espresso/70 hover:text-espresso'
+                }`}
+              >
+                <Gift className="w-3.5 h-3.5 text-gold" />
+                <span>Promos & Perks</span>
               </button>
             </div>
           </div>
         </div>
 
-        {activeTab === 'ala-carte' ? (
-          <div>
-            {/* Category Filter Pills */}
-            <div className="flex flex-wrap gap-2 mb-10">
-              {menuCategories.map((cat) => (
+        {activeTab === 'sphere' ? (
+          <div className="space-y-6">
+            <div className="bg-[#1C1410] border border-gold/30 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 text-ivory shadow-xl">
+              <div>
+                <div className="inline-flex items-center space-x-2 text-[10px] uppercase tracking-ultra-wide text-gold font-mono mb-1">
+                  <Globe className="w-3.5 h-3.5 text-gold" />
+                  <span>Interactive 3D WebGL2 Gastronomic Globe</span>
+                </div>
+                <h3 className="font-serif text-2xl sm:text-4xl text-ivory">
+                  Kozyna 360° Culinary Sphere.
+                </h3>
+                <p className="font-serif italic text-sm sm:text-base text-soft-beige/85 mt-1">
+                  Drag to rotate the 3D globe · Tap or click any dish to open the chef tasting card & reserve
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
                 <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2 text-xs uppercase tracking-wider transition-all border cursor-pointer ${
-                    selectedCategory === cat.id
-                      ? 'border-espresso bg-espresso text-ivory font-semibold shadow-sm'
-                      : 'border-soft-beige bg-cream/60 text-dark-brown hover:border-espresso/40 hover:bg-cream'
-                  }`}
+                  onClick={() => setActiveTab('ala-carte')}
+                  className="px-4 py-2 border border-cream/20 text-xs font-mono uppercase tracking-wider text-soft-beige hover:text-gold hover:border-gold transition-colors cursor-pointer"
                 >
-                  {cat.label}
+                  Return to Bento Grid
                 </button>
-              ))}
+                {onViewMoreMenu && (
+                  <button
+                    onClick={onViewMoreMenu}
+                    className="px-4 py-2 bg-gold text-espresso text-xs font-semibold uppercase tracking-widest-editorial hover:bg-gold-light transition-colors cursor-pointer flex items-center space-x-1.5"
+                  >
+                    <span>Full Catalogue</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Canvas Stage */}
+            <div className="relative w-full h-[520px] sm:h-[620px] bg-[#1C1410] border border-soft-beige/20 shadow-2xl overflow-hidden select-none">
+              <InfiniteMenu
+                items={sphereMenuItems}
+                count={120}
+                tileSize={0.64}
+                roundness={0.24}
+                zoom={1.65}
+                pullBack={1.0}
+                stretch={0.6}
+                inertia={0.65}
+                autoplay={3.5}
+                grayscale={true}
+                dim={0.45}
+                intro={true}
+                showInfo={true}
+                theme="dark"
+                accentColor="#C59B63"
+                backgroundColor="#1C1410"
+                onItemClick={(item) => onSelectDish(item.dish || item)}
+              />
+
+              {/* Interaction Hint */}
+              <div className="absolute bottom-4 left-6 z-10 pointer-events-none hidden sm:flex items-center space-x-2 px-3.5 py-1.5 bg-espresso/80 backdrop-blur-md border border-cream/15 text-[10px] font-mono uppercase tracking-wider text-soft-beige/90 shadow-md">
+                <Compass className="w-3.5 h-3.5 text-gold" />
+                <span>Drag to spin globe · Click dish to inspect</span>
+              </div>
+            </div>
+          </div>
+        ) : activeTab === 'ala-carte' ? (
+          <div>
+            {/* Promo Highlights Ribbon Bar */}
+            <div className="mb-8 p-4 sm:p-5 bg-cream/70 border border-soft-beige flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+              <div className="flex items-center space-x-3.5">
+                <div className="w-9 h-9 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0">
+                  <Gift className="w-4 h-4 text-gold" />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 text-[10px] font-mono uppercase tracking-wider text-muted-olive">
+                    <span className="font-bold text-espresso">Active Dining Perks</span>
+                    <span>·</span>
+                    <span>Verified Kozyna Island Offers</span>
+                  </div>
+                  <p className="text-xs text-dark-brown/90 font-sans mt-0.5">
+                    <span className="font-semibold text-espresso">Birthday Celebrant 100% FREE</span> (w/ 5 paying guests) · <span className="font-semibold text-espresso">Barkada Deal (6+1)</span> · <span className="font-semibold text-espresso">Family Deal (12+2)</span> · 20% Senior/PWD Privilege Honored.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('promos')}
+                className="inline-flex items-center space-x-1.5 px-4 py-2 bg-espresso text-ivory hover:bg-gold hover:text-espresso transition-colors text-[11px] font-mono uppercase tracking-wider cursor-pointer shadow-sm flex-shrink-0"
+              >
+                <Tag className="w-3.5 h-3.5 text-gold" />
+                <span>View All 5 Deals</span>
+              </button>
+            </div>
+
+            {/* Category Filter Pills & 360 Launch Quick Button */}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-10">
+              <div className="flex flex-wrap gap-2">
+                {menuCategories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`px-4 py-2 text-xs uppercase tracking-wider transition-all border cursor-pointer ${
+                      selectedCategory === cat.id
+                        ? 'border-espresso bg-espresso text-ivory font-semibold shadow-sm'
+                        : 'border-soft-beige bg-cream/60 text-dark-brown hover:border-espresso/40 hover:bg-cream'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={() => setActiveTab('sphere')}
+                className="inline-flex items-center space-x-1.5 px-3.5 py-2 border border-gold/60 bg-gold/10 hover:bg-gold hover:text-espresso text-espresso transition-all text-xs uppercase tracking-wider font-mono cursor-pointer shadow-sm"
+              >
+                <Globe className="w-3.5 h-3.5 text-gold" />
+                <span>Launch 360° Sphere</span>
+              </button>
             </div>
 
             {/* Asymmetric Bento Layout for Menu Items */}
@@ -318,22 +460,164 @@ export default function MenuShowcaseSection({
               </div>
             </div>
           </div>
+        ) : activeTab === 'promos' ? (
+          /* ============================================================== */
+          /* DEDICATED PROMOTIONS & GUEST PRIVILEGES VIEW                    */
+          /* ============================================================== */
+          <div className="space-y-12">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <span className="text-[10px] uppercase tracking-ultra-wide text-gold font-mono block mb-1">
+                Ongoing Dining Promos & Loyalty Benefits
+              </span>
+              <h3 className="font-serif text-3xl sm:text-5xl text-espresso font-normal">
+                Special Offers & Island Perks.
+              </h3>
+              <p className="font-serif italic text-base sm:text-xl text-dark-brown/85 mt-2">
+                “From complimentary birthday feasts to group barkada packages and guest loyalty stamps.”
+              </p>
+            </div>
+
+            {/* Promos Bento Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl mx-auto">
+              {restaurantData.activePromos.map((promo, idx) => {
+                const isHeroPromo = idx === 0; // Birthday promo takes prominent col span
+
+                return (
+                  <div
+                    key={promo.id}
+                    className={`bg-white border-2 border-soft-beige hover:border-gold p-7 sm:p-8 flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300 ${
+                      isHeroPromo ? 'md:col-span-12 lg:col-span-8 bg-gradient-to-br from-white via-cream/20 to-white' : 'md:col-span-6 lg:col-span-4'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="px-2.5 py-1 text-[9px] uppercase tracking-widest bg-gold text-espresso font-bold font-mono shadow-sm">
+                          {promo.badge}
+                        </span>
+                        <span className="text-[10px] font-mono text-muted-olive flex items-center space-x-1">
+                          <CheckCircle className="w-3 h-3 text-gold" />
+                          <span>Guaranteed Offer</span>
+                        </span>
+                      </div>
+
+                      <h4 className="font-serif text-2xl sm:text-3xl text-espresso mb-2 font-medium leading-snug">
+                        {promo.title}
+                      </h4>
+
+                      <div className="inline-block px-3 py-1 bg-cream border border-soft-beige text-xs font-serif font-bold text-espresso mb-4">
+                        {promo.discount}
+                      </div>
+
+                      <p className="text-xs sm:text-sm text-dark-brown/85 font-sans font-light leading-relaxed mb-4">
+                        {promo.summary}
+                      </p>
+
+                      <div className="pt-3 border-t border-soft-beige/50 text-[11px] font-mono text-muted-olive space-y-1">
+                        <div className="flex items-start space-x-1.5">
+                          <Tag className="w-3.5 h-3.5 text-gold flex-shrink-0 mt-0.5" />
+                          <span>Condition: {promo.condition}</span>
+                        </div>
+                        <div className="text-[10px] text-dark-brown/60">
+                          {promo.validity}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-6">
+                      <button
+                        onClick={onOpenReservation}
+                        className="w-full py-3 bg-espresso text-ivory hover:bg-gold hover:text-espresso text-xs uppercase tracking-widest-editorial font-semibold transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
+                      >
+                        <Calendar className="w-3.5 h-3.5 text-gold" />
+                        <span>Claim Promo on Reservation</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* 7 Hot Mains Daily Rotation Card spanning 4 cols */}
+              <div className="md:col-span-12 lg:col-span-4 bg-[#1C1410] text-ivory border-2 border-gold/40 p-7 sm:p-8 flex flex-col justify-between shadow-xl">
+                <div>
+                  <div className="flex items-center space-x-2 text-[10px] uppercase tracking-wider text-gold font-mono mb-2">
+                    <Flame className="w-3.5 h-3.5 text-gold" />
+                    <span>Daily Buffet Rotation</span>
+                  </div>
+
+                  <h4 className="font-serif text-2xl text-ivory mb-2">
+                    {restaurantData.buffetDetails.hotDishesCount}
+                  </h4>
+
+                  <p className="text-xs text-soft-beige/80 font-sans font-light leading-relaxed mb-4">
+                    Rotating every single service with fresh Pan-Asian and heirloom Filipino dishes prepared in small batches.
+                  </p>
+
+                  <div className="space-y-2 mb-6">
+                    {restaurantData.buffetDetails.keyInclusions.slice(0, 5).map((inc, i) => (
+                      <div key={i} className="flex items-start space-x-2 text-xs text-soft-beige font-light">
+                        <Check className="w-3.5 h-3.5 text-gold flex-shrink-0 mt-0.5" />
+                        <span>{inc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-cream/15 text-[11px] font-mono text-gold-light">
+                  <span>Regular Rates: ₱329 – ₱349 / head</span>
+                </div>
+              </div>
+            </div>
+          </div>
         ) : (
-          /* Banquet Buffets & Special Celebrations */
-          <div className="space-y-10">
+          /* ============================================================== */
+          /* BANQUET BUFFETS & SPECIAL CELEBRATIONS VIEW                     */
+          /* ============================================================== */
+          <div className="space-y-12">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="text-[10px] uppercase tracking-ultra-wide text-gold font-mono block mb-1">
                 Family Reunions, Weddings & Banquets
               </span>
-              <h3 className="font-serif text-3xl sm:text-4xl text-espresso">
+              <h3 className="font-serif text-3xl sm:text-5xl text-espresso font-normal">
                 {restaurantData.buffetAndEvents.title}
               </h3>
-              <p className="text-sm text-dark-brown/80 mt-2 font-light leading-relaxed">
+              <p className="font-serif italic text-base sm:text-xl text-dark-brown/85 mt-2">
                 {restaurantData.buffetAndEvents.description}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Daily Buffet Info Bar */}
+            <div className="max-w-6xl mx-auto p-6 bg-cream border border-soft-beige flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+              <div className="flex items-start sm:items-center space-x-4">
+                <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0">
+                  <Utensils className="w-5 h-5 text-gold" />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 text-[10px] uppercase font-mono tracking-wider text-muted-olive">
+                    <span className="font-bold text-espresso">Daily All-You-Can-Eat Spread</span>
+                    <span>·</span>
+                    <span>Jordan, Guimaras</span>
+                  </div>
+                  <h4 className="font-serif text-xl text-espresso font-medium mt-0.5">
+                    {restaurantData.buffetDetails.hotDishesCount} + Sides, Pizza & Endless Desserts
+                  </h4>
+                  <p className="text-xs text-dark-brown/80 font-sans mt-0.5">
+                    Lunch: 11:00 AM – 2:30 PM · Dinner: 5:00 PM – 9:00 PM · Regular Rates: ₱329 to ₱349 (Weekday specials from ₱299)
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex-shrink-0">
+                <button
+                  onClick={onOpenReservation}
+                  className="px-6 py-3 bg-espresso hover:bg-gold hover:text-espresso text-ivory text-xs uppercase tracking-widest-editorial font-semibold transition-colors shadow-sm cursor-pointer"
+                >
+                  Reserve Buffet Slot
+                </button>
+              </div>
+            </div>
+
+            {/* Buffet Options Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {restaurantData.buffetAndEvents.buffetOptions.map((pkg, i) => (
                 <div
                   key={i}

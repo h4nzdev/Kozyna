@@ -102,7 +102,7 @@ export default function AnnouncementsArchivePage({
             </p>
 
             <p className="text-xs sm:text-sm text-dark-brown/70 font-sans font-light mt-3 max-w-xl">
-              Published directly from our Jordan kitchen, San Miguel, Guimaras. Sourced from our official Facebook notices and kitchen reservations desk.
+              Published directly from our Jordan kitchen, Brgy. Alaguisoc, Guimaras. Sourced from our official Facebook notices and kitchen reservations desk.
             </p>
           </div>
         </div>
@@ -284,7 +284,7 @@ export default function AnnouncementsArchivePage({
           </button>
 
           <div className="text-xs font-mono text-dark-brown/60">
-            San Miguel, Jordan, Guimaras · Kozyna Restaurant Archive
+            Brgy. Alaguisoc, Jordan, Guimaras (Beside GSU Mosqueda) · Kozyna Restaurant Archive
           </div>
         </div>
       </main>

@@ -24,7 +24,8 @@ export default function Navigation({
     { label: 'Menu Showcase', id: 'menu-section' },
     { label: 'Our Story', id: 'story-section' },
     { label: 'Head Chef', id: 'chef-section' },
-    { label: 'Dining Experience', id: 'experience-section' },
+    { label: 'Experience', id: 'experience-section' },
+    { label: 'Guest Reviews', id: 'reviews-section' },
     { label: 'Visit Us', id: 'visit-section' },
   ];
 

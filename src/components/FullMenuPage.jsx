@@ -11,9 +11,15 @@ import {
   Calendar,
   X,
   Plus,
+  Globe,
+  Compass,
+  Grid,
+  Gift,
+  Tag,
 } from 'lucide-react';
 import { menuItems, menuCategories } from '../data/menu';
 import { restaurantData } from '../data/restaurant';
+import InfiniteMenu from './InfiniteMenu';
 
 export default function FullMenuPage({
   onBackToHome,
@@ -22,6 +28,18 @@ export default function FullMenuPage({
 }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState('both'); // 'both' | 'sphere' | 'grid'
+
+  // Prepare dishes for 3D Infinite Menu Sphere
+  const sphereMenuItems = useMemo(() => {
+    return menuItems.map((dish) => ({
+      image: dish.image,
+      title: dish.name,
+      description: `${dish.priceFormatted} · ${dish.categoryLabel}`,
+      link: '#',
+      dish: dish,
+    }));
+  }, []);
 
   // Scroll to top on mount
   useEffect(() => {
@@ -106,8 +124,133 @@ export default function FullMenuPage({
         </div>
       </div>
 
+      {/* 360° Sphere Culinary Explorer Section */}
+      {(viewMode === 'both' || viewMode === 'sphere') && (
+        <section className="bg-[#1C1410] text-ivory border-b border-soft-beige/20 overflow-hidden relative">
+          {/* Section Header with View Mode Switcher */}
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 pt-10 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10">
+            <div>
+              <div className="inline-flex items-center space-x-2 text-[10px] uppercase tracking-ultra-wide text-gold font-mono mb-2">
+                <Globe className="w-3.5 h-3.5 text-gold" />
+                <span>Interactive 3D Sphere · WebGL2 Gastronomic Explorer</span>
+              </div>
+              <h2 className="font-serif text-3xl sm:text-5xl text-ivory font-normal tracking-tight">
+                The Kozyna Culinary Sphere.
+              </h2>
+              <p className="font-serif italic text-base sm:text-xl text-soft-beige/85 mt-2">
+                “Drag and rotate the 3D globe to navigate our island creations. Click any dish or inspection arrow to view details & reserve.”
+              </p>
+            </div>
+
+            {/* View Mode Switcher */}
+            <div className="flex items-center space-x-1.5 self-start md:self-end bg-espresso/90 border border-cream/20 p-1.5 shadow-inner">
+              <button
+                onClick={() => setViewMode('both')}
+                className={`px-3.5 py-1.5 text-[11px] uppercase tracking-widest font-mono transition-all cursor-pointer ${
+                  viewMode === 'both'
+                    ? 'bg-gold text-espresso font-semibold shadow-sm'
+                    : 'text-soft-beige/80 hover:text-ivory'
+                }`}
+              >
+                Sphere & Grid
+              </button>
+              <button
+                onClick={() => setViewMode('sphere')}
+                className={`px-3.5 py-1.5 text-[11px] uppercase tracking-widest font-mono transition-all cursor-pointer ${
+                  viewMode === 'sphere'
+                    ? 'bg-gold text-espresso font-semibold shadow-sm'
+                    : 'text-soft-beige/80 hover:text-ivory'
+                }`}
+              >
+                Sphere Only
+              </button>
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`px-3.5 py-1.5 text-[11px] uppercase tracking-widest font-mono transition-all cursor-pointer ${
+                  viewMode === 'grid'
+                    ? 'bg-gold text-espresso font-semibold shadow-sm'
+                    : 'text-soft-beige/80 hover:text-ivory'
+                }`}
+              >
+                Grid Only
+              </button>
+            </div>
+          </div>
+
+          {/* InfiniteMenu 3D Canvas Stage */}
+          <div className="relative w-full h-[520px] sm:h-[620px] lg:h-[660px] bg-[#1C1410] select-none">
+            <InfiniteMenu
+              items={sphereMenuItems}
+              count={120}
+              tileSize={0.64}
+              roundness={0.24}
+              zoom={1.65}
+              pullBack={1.0}
+              stretch={0.6}
+              inertia={0.65}
+              autoplay={3.5}
+              grayscale={true}
+              dim={0.45}
+              intro={true}
+              showInfo={true}
+              theme="dark"
+              accentColor="#C59B63"
+              backgroundColor="#1C1410"
+              onItemClick={(item) => onSelectDish(item.dish || item)}
+            />
+
+            {/* Floating interaction hint pill in bottom corner */}
+            <div className="absolute bottom-4 left-6 z-10 pointer-events-none hidden sm:flex items-center space-x-2 px-3.5 py-1.5 bg-espresso/80 backdrop-blur-md border border-cream/15 text-[10px] font-mono uppercase tracking-wider text-soft-beige/90 shadow-md">
+              <Compass className="w-3.5 h-3.5 text-gold" />
+              <span>Drag to spin globe · Click dish to inspect</span>
+            </div>
+          </div>
+
+          {/* Quick Switch to Grid Strip if in Sphere Only Mode */}
+          {viewMode === 'sphere' && (
+            <div className="py-4 px-6 bg-espresso border-t border-cream/10 text-center">
+              <button
+                onClick={() => setViewMode('both')}
+                className="text-xs uppercase tracking-widest-editorial font-mono text-gold hover:text-gold-light inline-flex items-center space-x-2"
+              >
+                <Grid className="w-3.5 h-3.5" />
+                <span>Show Search & Category Filter Grid Below</span>
+              </button>
+            </div>
+          )}
+        </section>
+      )}
+
       {/* Main Content Area: Search, Filters & Dishes Grid */}
+      {(viewMode === 'both' || viewMode === 'grid') && (
       <main className="max-w-7xl mx-auto py-12 sm:py-16 px-6 sm:px-10 lg:px-16">
+        {/* Active Promos & Perks Strip */}
+        <div className="mb-8 p-4 sm:p-5 bg-white border border-soft-beige flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+          <div className="flex items-center space-x-3.5">
+            <div className="w-9 h-9 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0">
+              <Gift className="w-4 h-4 text-gold" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2 text-[10px] font-mono uppercase tracking-wider text-muted-olive">
+                <span className="font-bold text-espresso">Active Dining Privileges</span>
+                <span>·</span>
+                <span>Jordan, Guimaras</span>
+              </div>
+              <p className="text-xs text-dark-brown/90 font-sans mt-0.5">
+                <span className="font-semibold text-espresso">Birthday Celebrant 100% FREE</span> (w/ 5 paying guests) · <span className="font-semibold text-espresso">Barkada Deal (6+1)</span> · <span className="font-semibold text-espresso">Family Deal (12+2)</span> · 20% Senior/PWD Privilege Honored.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => onOpenReservationWithDish && onOpenReservationWithDish(null)}
+            className="inline-flex items-center space-x-1.5 px-4 py-2 bg-espresso text-ivory hover:bg-gold hover:text-espresso transition-colors text-[11px] font-mono uppercase tracking-wider cursor-pointer shadow-sm flex-shrink-0"
+          >
+            <Tag className="w-3.5 h-3.5 text-gold" />
+            <span>Claim on Booking</span>
+          </button>
+        </div>
+
         {/* Search & Filter Controls */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12 pb-8 border-b border-soft-beige/60">
           {/* Category Filter Pills */}
@@ -299,7 +442,7 @@ export default function FullMenuPage({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {restaurantData.buffetAndEvents.buffetOptions.map((pkg, i) => (
               <div
                 key={i}
@@ -349,10 +492,11 @@ export default function FullMenuPage({
           </button>
 
           <div className="text-xs font-mono text-dark-brown/60">
-            San Miguel, Jordan, Guimaras · Kozyna Culinary Catalogue
+            Brgy. Alaguisoc, Jordan, Guimaras (Beside GSU Mosqueda) · Kozyna Culinary Catalogue
           </div>
         </div>
       </main>
+      )}
     </div>
   );
 }

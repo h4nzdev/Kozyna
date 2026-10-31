@@ -28,7 +28,7 @@ export default function FooterSection({ onScrollToTop }) {
             </div>
 
             <p className="text-xs text-soft-beige/70 font-light leading-relaxed max-w-sm pt-2">
-              A contemporary editorial dining destination celebrating authentic Western Visayas heirloom recipes, fresh Jordan catches, and warm Hiligaynon hospitality.
+              Guimaras Island's beloved home of unlimited Filipino & Pan-Asian buffets, comforting family feasts, and all-inclusive celebration event packages.
             </p>
           </div>
 
@@ -45,18 +45,21 @@ export default function FooterSection({ onScrollToTop }) {
               {restaurantData.location.landmarks}
             </div>
             <div className="pt-2 pl-6 text-[11px] text-gold-light">
-              Daily Lunch & Dinner · 10:30 AM – 9:00 PM
+              Open Daily · 11:00 AM – 9:00 PM (Buffet: ₱299 – ₱355)
             </div>
           </div>
 
           {/* Direct Contacts & Social */}
           <div className="md:col-span-3 space-y-3 text-xs font-mono">
             <span className="text-[10px] uppercase tracking-widest text-gold block font-semibold mb-2">
-              Direct Contact
+              Direct Contact & Bookings
             </span>
             <div className="flex items-center space-x-2 text-soft-beige/80">
               <Phone className="w-3.5 h-3.5 text-gold flex-shrink-0" />
-              <span>{restaurantData.contact.phone}</span>
+              <div className="flex flex-col">
+                <a href="tel:+639534256428" className="hover:text-gold transition-colors">+63 953 425 6428</a>
+                <a href="tel:+639695836203" className="hover:text-gold transition-colors">+63 969 583 6203</a>
+              </div>
             </div>
             <div className="flex items-center space-x-2 text-soft-beige/80">
               <Mail className="w-3.5 h-3.5 text-gold flex-shrink-0" />
@@ -92,14 +95,14 @@ export default function FooterSection({ onScrollToTop }) {
         {/* Bottom Line */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-soft-beige/50 font-mono tracking-wider gap-4">
           <div>
-            © {new Date().getFullYear()} KOZYNA RESTAURANT. SAN MIGUEL, JORDAN, GUIMARAS, PHILIPPINES. ALL RIGHTS RESERVED.
+            © {new Date().getFullYear()} KOZYNA RESTAURANT. BRGY. ALAGUISOC, JORDAN, GUIMARAS, PHILIPPINES. ALL RIGHTS RESERVED.
           </div>
           <div className="flex items-center space-x-6 text-[10px]">
             <span>Postal Code 5045</span>
             <span>·</span>
-            <span>Western Visayas</span>
+            <span>Beside GSU Mosqueda</span>
             <span>·</span>
-            <span>Contemporary Island Gastronomy</span>
+            <span>Unlimited Buffets & Event Venue</span>
           </div>
         </div>
       </div>

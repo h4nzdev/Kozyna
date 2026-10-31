@@ -130,14 +130,14 @@ export default function HeroSection({
       >
         <div className="flex items-center space-x-2">
           <Sparkles className="w-3.5 h-3.5 text-gold flex-shrink-0" />
-          <span>San Miguel · Jordan · Guimaras · Philippines</span>
+          <span>Brgy. Alaguisoc · Jordan · Guimaras (Beside GSU Mosqueda)</span>
         </div>
         <div className="flex items-center space-x-6 text-[10px]">
           <span>10.5936° N, 122.5898° E</span>
           <span className="hidden sm:inline">·</span>
-          <span>Est. 2021</span>
+          <span>Open Daily 11 AM – 9 PM</span>
           <span className="hidden sm:inline">·</span>
-          <span className="text-muted-olive font-semibold">Contemporary Island Dining</span>
+          <span className="text-muted-olive font-semibold">Unlimited Filipino & Pan-Asian Buffet</span>
         </div>
       </div>
 
@@ -152,7 +152,7 @@ export default function HeroSection({
             KOZYNA
           </h1>
           <p className="font-serif italic text-base sm:text-xl md:text-2xl text-dark-brown/80 mt-3 sm:mt-4 font-normal tracking-wide">
-            A Journey Through The Art of Dining · Jordan, Guimaras
+            The Home of Unlimited Filipino & Pan-Asian Buffet · Jordan, Guimaras
           </p>
         </div>
 
@@ -162,7 +162,7 @@ export default function HeroSection({
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center space-x-2.5 px-3 py-1 bg-cream/70 border border-soft-beige text-[10px] uppercase tracking-ultra-wide font-mono text-muted-olive font-semibold">
               <Compass className="w-3 h-3 text-gold" />
-              <span>An Artisanal Western Visayas Sanctuary</span>
+              <span>Brgy. Alaguisoc · Right Beside GSU Mosqueda Campus</span>
             </div>
 
             {/* Editorial Headline */}
@@ -170,7 +170,7 @@ export default function HeroSection({
               ref={headlineRef}
               className="font-serif text-4xl sm:text-6xl lg:text-7xl text-espresso font-normal tracking-tight leading-[0.98]"
             >
-              A Place at the Table.
+              Comforting Flavors, Unlimited Feasts.
             </h2>
 
             {/* Expressive Italic Quote */}
@@ -178,7 +178,7 @@ export default function HeroSection({
               ref={quoteRef}
               className="font-serif italic text-xl sm:text-2xl lg:text-3xl text-dark-brown/90 max-w-xl font-normal leading-snug"
             >
-              “Where ancestral Western Visayas recipes meet the sweet sun and coastal waters of Guimaras.”
+              “Experience paradise on your plate with budget-friendly all-you-can-eat spreads, sushi specials, and island warmth.”
             </p>
 
             {/* Short Restaurant Introduction */}
@@ -186,7 +186,7 @@ export default function HeroSection({
               ref={introRef}
               className="font-sans text-sm sm:text-base text-dark-brown/80 max-w-xl font-light leading-relaxed"
             >
-              Welcome to Kozyna. Located in the gentle breezes of Jordan, Guimaras, we welcome you to an intentional culinary experience crafted around freshly gathered island produce, charcoal-seared local catch, and the generous warmth of Hiligaynon hospitality.
+              Welcome to Kozyna. Located along the main highway in Brgy. Alaguisoc, Jordan, Guimaras (right beside the Guimaras State University – Mosqueda Campus), we are the island's favorite spot for budget-friendly all-you-can-eat Filipino and Pan-Asian buffets (₱299 – ₱355/pax), weekend sushi feasts, and all-inclusive event celebrations.
             </p>
 
             {/* Primary CTAs: Explore Menu & Visit Us */}
@@ -196,7 +196,7 @@ export default function HeroSection({
                 className="px-8 py-4 bg-espresso text-ivory hover:bg-gold hover:text-espresso transition-all duration-300 text-xs uppercase tracking-widest-editorial font-semibold shadow-md flex items-center space-x-3 group cursor-pointer"
               >
                 <Utensils className="w-4 h-4 text-gold group-hover:text-espresso transition-colors" />
-                <span>Explore Menu</span>
+                <span>Explore Menu & Buffets</span>
                 <ArrowDown className="w-3.5 h-3.5 text-gold group-hover:text-espresso group-hover:translate-y-0.5 transition-transform" />
               </button>
 
@@ -213,15 +213,15 @@ export default function HeroSection({
             <div className="pt-4 flex flex-wrap gap-x-6 gap-y-2 text-[11px] font-mono text-dark-brown/70 border-t border-soft-beige/40">
               <span className="flex items-center space-x-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
-                <span>Heirloom Batwan Souring</span>
+                <span>Unlimited Filipino & Pan-Asian Buffets (₱299–₱355)</span>
               </span>
               <span className="flex items-center space-x-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
-                <span>Wood-Fired Guimaras Seafood</span>
+                <span>Weekend Signature Sushi Bar</span>
               </span>
               <span className="flex items-center space-x-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
-                <span>Sweet Jordan Mangoes</span>
+                <span>Party & Event Packages</span>
               </span>
             </div>
           </div>
@@ -274,12 +274,14 @@ export default function HeroSection({
       {/* Bottom Editorial Strip */}
       <div className="max-w-7xl mx-auto w-full pt-6 border-t border-soft-beige/40 flex flex-col sm:flex-row items-center justify-between text-xs text-dark-brown/70 font-mono gap-3">
         <div className="flex items-center space-x-4">
-          <span>Open 10:30 AM – 9:00 PM Daily</span>
+          <span>Open Daily 11:00 AM – 9:00 PM</span>
           <span>·</span>
-          <span>5 Mins from Jordan Port</span>
+          <span>Beside GSU Mosqueda Campus, Jordan</span>
+          <span>·</span>
+          <span>+63 953 425 6428</span>
         </div>
         <div className="flex items-center space-x-2 text-[11px] text-muted-olive">
-          <span>Scroll down to discover our announcements & menu</span>
+          <span>Scroll down to discover our buffets & menu</span>
           <ArrowDown className="w-3 h-3 text-gold animate-bounce" />
         </div>
       </div>

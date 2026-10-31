@@ -6,6 +6,7 @@ import MenuShowcaseSection from './components/MenuShowcaseSection';
 import StorySection from './components/StorySection';
 import ChefSection from './components/ChefSection';
 import DiningExperienceSection from './components/DiningExperienceSection';
+import ReviewsSection from './components/ReviewsSection';
 import VisitSection from './components/VisitSection';
 import FooterSection from './components/FooterSection';
 import AnnouncementsArchivePage from './components/AnnouncementsArchivePage';
@@ -196,12 +197,15 @@ export default function App() {
             onOpenReservation={() => setIsReservationOpen(true)}
           />
 
-          {/* 07. VISIT US & RESERVATION SECTION */}
+          {/* 07. RATINGS & REVIEWS SECTION (Rate-Limited Anti-Spam Reviews) */}
+          <ReviewsSection />
+
+          {/* 08. VISIT US & RESERVATION SECTION */}
           <VisitSection
             onOpenReservation={() => setIsReservationOpen(true)}
           />
 
-          {/* 08. FOOTER SECTION */}
+          {/* 09. FOOTER SECTION */}
           <FooterSection
             onScrollToTop={() => handleScrollToSection('hero-section')}
           />
